@@ -1,20 +1,49 @@
-const  tipAmount = document.getElementById("tipAmount");
+const tipAmount = document.getElementById("tipAmount");
 
 const totalPerson = document.getElementById("totalPerson");
 
 const billMount = document.getElementById("billMount");
+//----------------ADD event listeners---------------
 
-console.log(tipAmount);
-console.log(totalPerson);
-console.log(billMount);
+document.getElementById("reset").addEventListener("click", () => {
+    billMount.value = "";
+    getTotal();
+    // falta cambiar el estado de click del boton
+});
 
-tipAmount.innerText = getNumero("234");
-totalPerson.innerText = getNumero("2123");
+billMount.addEventListener("input",() => console.log(getTotal("")));
 
-console.log(tipAmount);
-
-function getNumero(num){
-
-    num =parseFloat(num).toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:2});
-    return "$ " + num;
+function getNumero(num) {
+  num = parseFloat(num).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  return "$ " + num;
 }
+
+// obtener % de tip
+
+// Event listener para cambio de people
+
+
+function getTotal(bill, tip, pax){
+    if (bill !== "") {
+
+        totalPerson.innerText = getNumero(billMount.value);
+      } else {
+        return{tipAmount:getNumero("0"), totalPerson:getNumero("0")}
+      }
+
+}
+
+
+// function getTotal(bill, tip, pax){
+//     if (billMount.value !== "") {
+
+//         totalPerson.innerText = getNumero(billMount.value);
+//       } else {
+//         totalPerson.innerText = getNumero("0");
+//         tipAmount.innerText = getNumero("0");
+//       }
+
+// }
