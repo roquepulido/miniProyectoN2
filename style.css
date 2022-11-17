@@ -1,0 +1,77 @@
+:root{
+    --CStrong : hsl(172, 67%, 45%);
+    --CDark : hsl(183, 100%, 15%);
+    --CGray1:hsl(186, 14%, 43%);
+    --CGray2:hsl(184, 14%, 56%);
+    --CGray3:hsl(185, 41%, 84%);
+    --CGray4:hsl(189, 41%, 97%);
+    --White:hsl(0,0%,100%);
+}
+
+/*----------------------------CUSTOM COLORS-----------------*/
+
+.bg__White{
+    background-color: var(--White);
+}
+.bg__CDark{
+    background-color: var(--CDark);
+}
+.bg__CStrong{
+    background-color: var(--CStrong);
+}
+
+.bg__CGray1{
+    background-color: var(--CGray1);
+}
+.bg__CGray2{
+    background-color: var(--CGray2);
+}
+.bg__CGray3{
+    background-color: var(--CGray3);
+}
+.bg__CGray4{
+    background-color: var(--CGray4);
+}
+
+.color__White{
+    color: var(--White);
+}
+.color__CDark{
+    color: var(--CDark);
+}
+.color__CStrong{
+    color: var(--CStrong);
+}
+.color__CGray1{
+    color: var(--CGray1);
+}
+.color__CGray2{
+    color: var(--CGray2);
+}
+.color__CGray3{
+    color: var(--CGray3);
+}
+.color__CGray4{
+    color: var(--CGray4);
+}
+
+body{
+    font-family: 'Space Mono', monospace;
+    
+}
+
+.borde{
+    border-radius: 2rem !important;
+}
+.btn-check:checked+.btn-secondary{
+    background-color: var(--CStrong);
+    color: var(--CDark);
+}
+.input__text__right::placeholder{
+    text-align: right;
+}
+.input__text__right{
+    text-align: right;
+}
+i{
+color: var(--CGray2);}
