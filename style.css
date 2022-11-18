@@ -8,6 +8,7 @@
     --White:hsl(0,0%,100%);
 }
 
+
 /*----------------------------CUSTOM COLORS-----------------*/
 
 .bg__White{
@@ -87,4 +88,8 @@ body{
 .reset__btn:hover{
     background-color: var(--CGray3);
     color: var(--CDark);
+}
+main{
+    max-width: 1440px;
+    min-width: 375px;
 }

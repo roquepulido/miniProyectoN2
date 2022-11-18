@@ -29,11 +29,12 @@ buttonReset.addEventListener("click",e => {
 billMountInput.addEventListener("input",updateCalc);
 //-----------Input PAX--------------
 paxInput.addEventListener("input",()=>{
-  if (paxInput.value <= 0){
+  
+  if (paxInput.value < 1){
     paxInput.classList.add("is-invalid");
 
   }else{
-    
+    paxInput.classList.remove("is-invalid");
     updateCalc();
   }
   
