@@ -3,7 +3,8 @@ const totalPersonLabel = document.getElementById("totalPerson");
 const billMountInput = document.getElementById("billMount");
 const paxInput = document.getElementById("pax");
 const customTipInput = document.getElementById("customTip"); 
-
+const buttonReset = document.getElementById("reset");
+const tipInputs = document.querySelectorAll("input[name='tip']");
 let bill = 0;
 let tip = 0;
 let pax = 1;
@@ -12,7 +13,7 @@ let pax = 1;
 
 //----------------ADD event listeners---------------
 // --------- Click Reset-----------
-document.getElementById("reset").addEventListener("click", () => {
+buttonReset.addEventListener("click", (e) => {
   billMountInput.value = "";
   paxInput.value = "";
   tipAmountLabel.innerText = "$ 0.00";
@@ -23,6 +24,8 @@ document.getElementById("reset").addEventListener("click", () => {
   
     // falta cambiar el estado de click del boton
 });
+buttonReset.addEventListener("click",e => {
+  e.target.blur()});
 //-----------Input Bill Mount ---------------
 billMountInput.addEventListener("input",updateCalc);
 //-----------Input PAX--------------
@@ -33,7 +36,13 @@ customTipInput.addEventListener("input",()=>{
   updateCalc();
 });
 //-----------------Input Radius TIP-----------
-//Poner Listener para actualizar y quitar custom
+tipInputs.forEach((tipInput)=>{
+  tipInput.addEventListener("change",()=>{
+    customTipInput.value = "";
+    updateCalc();
+  });
+
+});
 //--------------End EVENT Listeners-----------
 
 function inputNumberFixed(num){
