@@ -73,5 +73,18 @@ body{
 .input__text__right{
     text-align: right;
 }
-i{
-color: var(--CGray2);}
+#invalidPax{
+    top: -34px !important;
+}
+.tip__radio:hover{
+    background-color: var(--CStrong);
+    color: var(--CDark);
+}
+.custom__tip{
+    border: 2px solid var(--CStrong) !important;
+    color: var(--CDark);
+}
+.reset__btn:hover{
+    background-color: var(--CGray3);
+    color: var(--CDark);
+}

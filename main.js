@@ -9,30 +9,41 @@ let bill = 0;
 let tip = 0;
 let pax = 1;
 
-
-
 //----------------ADD event listeners---------------
 // --------- Click Reset-----------
-buttonReset.addEventListener("click", (e) => {
+buttonReset.addEventListener("click", () => {
   billMountInput.value = "";
   paxInput.value = "";
   tipAmountLabel.innerText = "$ 0.00";
   totalPersonLabel.innerText = "$ 0.00";
   customTipInput.value = "";
   document.querySelectorAll("input[name='tip']:checked").forEach((input)=> input.checked = false);
+  paxInput.classList.remove("is-invalid");
+  buttonResetDisable();
+  customTipInput.classList.remove("custom__tip");
 
-  
-    // falta cambiar el estado de click del boton
 });
 buttonReset.addEventListener("click",e => {
   e.target.blur()});
 //-----------Input Bill Mount ---------------
 billMountInput.addEventListener("input",updateCalc);
 //-----------Input PAX--------------
-paxInput.addEventListener("input",updateCalc);
+paxInput.addEventListener("input",()=>{
+  if (paxInput.value <= 0){
+    paxInput.classList.add("is-invalid");
+
+  }else{
+    
+    updateCalc();
+  }
+  
+  });
 //-----------Input Custom TIP--------------
 customTipInput.addEventListener("input",()=>{
   document.querySelectorAll("input[name='tip']:checked").forEach((input)=> input.checked = false);
+  if(customTipInput.value != ""){
+    customTipInput.classList.add("custom__tip");
+  }else customTipInput.classList.remove("custom__tip");
   updateCalc();
 });
 //-----------------Input Radius TIP-----------
@@ -104,6 +115,7 @@ function updateCalc(){
   let ans = getTotal(bill,tip,pax);
   tipAmountLabel.innerText = getNumero(ans.tipAmount);
   totalPersonLabel.innerText = getNumero(ans.totalPerson);
+  buttonResetDisable();
 
 }
 
@@ -120,3 +132,10 @@ function getTotal(bill = 0, tip, pax){
         return res;
 }
 
+function buttonResetDisable(){
+  if (tipAmountLabel.innerText == "$ 0.00" && totalPersonLabel.innerText == "$ 0.00"){
+
+    buttonReset.classList.add("disabled");
+
+  } else {buttonReset.classList.remove("disabled");}
+}
