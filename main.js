@@ -1,17 +1,83 @@
-const tipAmount = document.getElementById("tipAmount");
+const tipAmountLabel = document.getElementById("tipAmount");
+const totalPersonLabel = document.getElementById("totalPerson");
+const billMountInput = document.getElementById("billMount");
+const paxInput = document.getElementById("pax");
+const customTipInput = document.getElementById("customTip"); 
 
-const totalPerson = document.getElementById("totalPerson");
+let bill = 0;
+let tip = 0;
+let pax = 1;
 
-const billMount = document.getElementById("billMount");
+
+
 //----------------ADD event listeners---------------
-
+// --------- Click Reset-----------
 document.getElementById("reset").addEventListener("click", () => {
-    billMount.value = "";
-    getTotal();
+  billMountInput.value = "";
+  paxInput.value = "";
+  tipAmountLabel.innerText = "$ 0.00";
+  totalPersonLabel.innerText = "$ 0.00";
+  customTipInput.value = "";
+  document.querySelectorAll("input[name='tip']:checked").forEach((input)=> input.checked = false);
+
+  
     // falta cambiar el estado de click del boton
 });
+//-----------Input Bill Mount ---------------
+billMountInput.addEventListener("input",updateCalc);
+//-----------Input PAX--------------
+paxInput.addEventListener("input",updateCalc);
+//-----------Input Custom TIP--------------
+customTipInput.addEventListener("input",()=>{
+  document.querySelectorAll("input[name='tip']:checked").forEach((input)=> input.checked = false);
+  updateCalc();
+});
+//-----------------Input Radius TIP-----------
+//Poner Listener para actualizar y quitar custom
+//--------------End EVENT Listeners-----------
 
-billMount.addEventListener("input",() => console.log(getTotal("")));
+function inputNumberFixed(num){
+    formatNum = "";
+    
+    if(num.length > 12){
+      num = num.slice(1);
+      num /= 100;
+      formatNum = parseFloat(num).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+    }else if(num.length>2){
+      num /= 100;
+      formatNum = parseFloat(num).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+  }
+    else if(num.length == 1){
+        formatNum = "0.0" + num;
+    }else{
+        formatNum = "0." + num;
+    }
+    return formatNum;
+}
+function getInputValues(){
+  bill = parseFloat(billMountInput.value.replaceAll(",",""));
+  pax = paxInput.value || 1;
+  tip = getTip();
+}
+
+function getTip(){
+  let customTip = customTipInput.value;
+  let tipQuery = document.querySelector("input[name='tip']:checked");
+  if (customTip != ""){
+    customTip = parseFloat(customTip);
+    return customTip / 100;
+  }else if(tipQuery != null){    
+    return tipQuery.value;
+  }else{ 
+    return 0;
+  }
+}
 
 function getNumero(num) {
   num = parseFloat(num).toLocaleString(undefined, {
@@ -21,29 +87,27 @@ function getNumero(num) {
   return "$ " + num;
 }
 
-// obtener % de tip
-
-// Event listener para cambio de people
-
-
-function getTotal(bill, tip, pax){
-    if (bill !== "") {
-
-        totalPerson.innerText = getNumero(billMount.value);
-      } else {
-        return{tipAmount:getNumero("0"), totalPerson:getNumero("0")}
-      }
+function updateCalc(){
+  num = billMountInput.value;
+  num = num.replace(".","").replaceAll(",","");
+  billMountInput.value = inputNumberFixed(num);
+  getInputValues();
+  let ans = getTotal(bill,tip,pax);
+  tipAmountLabel.innerText = getNumero(ans.tipAmount);
+  totalPersonLabel.innerText = getNumero(ans.totalPerson);
 
 }
 
 
-// function getTotal(bill, tip, pax){
-//     if (billMount.value !== "") {
+function getTotal(bill = 0, tip, pax){
+  let res = {tipAmount:0,totalPerson:0};
+  let tipValue = 0;
 
-//         totalPerson.innerText = getNumero(billMount.value);
-//       } else {
-//         totalPerson.innerText = getNumero("0");
-//         tipAmount.innerText = getNumero("0");
-//       }
+    if (bill !== 0) {
+      tipValue = bill * tip;      
+      res.tipAmount = tipValue / pax;
+      res.totalPerson = (bill + tipValue) / pax;
+      } 
+        return res;
+}
 
-// }
